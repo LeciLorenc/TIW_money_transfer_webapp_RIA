@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Login page THY</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" media="all" href="/CSS/mystyle.css" th:href="@{/CSS/mystyle.css}"/>
+    <script src="script/error.js" charset="UTF-8" defer></script>
+</head>
+<body>
+
+<!--<div id="container">-->
+
+
+<!--    <div id="body" >-->
+<!--        &lt;!&ndash;			<script src="/SCRIPT/forms.js" type="text/javascript"></script>&ndash;&gt;-->
+<!--        <fieldset><legend>Login form</legend>-->
+<!--            <form name="login" method="POST" action="CheckLogin" th:attr="action=@{/CheckLogin} ">-->
+<!--                &lt;!&ndash;                <p class="error" data-th-class="${loginError}? 'error' : 'hidden'" data-th-utext='${lang.getString("errorLogin")}'>The user doesn't exist or you've forgot the password.</p>&ndash;&gt;-->
+
+<!--                <p data-th-if="${loginError}" data-th-utext="${errorText}" class="error">This is an error text</p>-->
+
+
+<!--                <input type="text"-->
+<!--                       name="username" placeholder="username" value="ciccio" required> <br />-->
+<!--                <input type="password"-->
+<!--                       name="password" placeholder="password" value="pollo" required> <br />-->
+<!--                <input type="submit" value="Login">-->
+<!--            </form>-->
+<!--        </fieldset>-->
+<!--        <fieldset><legend>Register form</legend>-->
+
+<!--            <p data-th-if="${registerError}" data-th-utext="${registrationText}" class="success">This is an error text</p>-->
+
+
+<!--            <form action="HandleRegistration" method="POST" th:attr="action=@{/HandleRegistration} ">-->
+<!--                <input type="text" name="usr" placeholder="Username"  required> <br/>-->
+<!--                <input type="email" name="email" placeholder="Email" required> <br/>-->
+<!--                <input type="password" name="pwd" placeholder="Password" required> <br/>-->
+<!--                <input type="password" name="pwd2" placeholder="Repeat password"  required> <br/>-->
+<!--                <input type="submit" value="Registration">-->
+<!--            </form>-->
+<!--        </fieldset>-->
+<!--    </div>-->
+
+
+<!--</div>-->
+
+
+<div class="table formdata" id="main">
+    <table align="center" >
+        <thead class="thead-light" id="header">
+        </thead>
+
+        <tbody>
+        <tr>
+
+            <td>
+                <fieldset>
+                    <legend>Login form</legend>
+                    <form name="login" method="POST" action="" th:attr="action=@{/checkLogin} ">
+                        <!--                <p class="error" data-th-class="${loginError}? 'error' : 'hidden'" data-th-utext='${lang.getString("errorLogin")}'>The user doesn't exist or you've forgot the password.</p>-->
+
+                        <p data-th-if="${loginError}" data-th-utext="${errorText}" class="error">This is an error
+                            text</p>
+
+
+                        <input type="text"
+                               name="email" placeholder="email" value="a@b.com" required> <br/>
+                        <input type="password"
+                               name="password0" placeholder="password" value="1234" required> <br/>
+                        <input type="password"
+                               name="password1" placeholder="repeat password" value="1234" required> <br/>
+
+
+                        <input class="btn btn-lg btn-block btn-info" onclick="this.form.action='checkLogin';"
+                               type="submit" name="Login" value="login">
+                    </form>
+                </fieldset>
+
+            </td>
+
+
+            <td>
+                <fieldset>
+                    <legend>Registration form</legend>
+
+                    <p data-th-if="${registerError}" data-th-utext="${registrationText}" class="success">This is an
+                        error text</p>
+
+                    <div class="warning-message" th:if="${warning}">
+                        <span th:text="${warning}">Data not valid!</span>
+                    </div>
+                    <form action="HandleRegistration" method="POST" th:attr="action=@{/HandleRegistration} ">
+                        <input type="text" name="name" placeholder="name" required> <br/>
+                        <input type="text" name="surname" placeholder="surname" required> <br/>
+                        <input type="text" name="username" placeholder="username" required> <br/>
+                        <input type="email" name="email" placeholder="Email" required> <br/>
+                        <input type="password" name="pwd1" placeholder="Password" required> <br/>
+                        <input type="password" name="pwd2" placeholder="Repeat password" required> <br/>
+                        <input class="btn btn-lg btn-block btn-secondary" type="submit" value="Registration">
+                    </form>
+                </fieldset>
+            </td>
+
+            <div id="footer">
+
+                <button type="button" class="btn btn-lg btn-block btn-default" value="Skip"
+                        onclick=location.href='CheckLogin?ospite=true'>SKIP
+                </button>
+
+                <!--                <input type="button" value="Skip" onclick=location.href='CheckLogin?ospite=true'>-->
+            </div>
+
+
+
+
+
+        </tr>
+        </tbody>
+
+
+    </table>
+
+</div>
+
+
+</body>
+</html>
