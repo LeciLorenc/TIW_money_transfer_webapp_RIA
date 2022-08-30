@@ -14,7 +14,6 @@ import java.sql.SQLException;
 
 public abstract class HttpServletFilter extends HttpFilter {
     protected Connection conn;
-    //protected String path = getServletContext().getContextPath();
 
     @Override
     public void init(FilterConfig config) throws ServletException {

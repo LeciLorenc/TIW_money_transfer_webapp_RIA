@@ -17,12 +17,10 @@ public class UserFilter extends HttpServletFilter {
         if(session.isNew() || session.getAttribute("currentUser")==null) {
             String path = req.getPathInfo();
             req.setAttribute("error", "You are not authorized to access this page");
-//            forward(req, res, PathUtils.pathToErrorPage);
             res.sendRedirect(path + "/index");
         }else {
             chain.doFilter(req,res);
         }
     }
-
 
 }

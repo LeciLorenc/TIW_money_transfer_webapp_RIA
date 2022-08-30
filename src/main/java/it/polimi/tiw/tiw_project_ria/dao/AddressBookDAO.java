@@ -7,8 +7,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-
-
 public class AddressBookDAO extends GeneralDAO {
 
 	private Connection connection;
@@ -111,6 +109,7 @@ public class AddressBookDAO extends GeneralDAO {
 			throw new SQLException("Error accessing the DB when" + performedAction);
 		}finally {
 			try {
+				assert preparedStatementAddUser != null;
 				preparedStatementAddUser.close();
 			}catch (Exception e) {
 				throw new SQLException("Error closing the statement when" + performedAction);

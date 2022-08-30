@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="TIW_project_RIA:war">
+    <output-path>$PROJECT_DIR$/out/artifacts/TIW_project_RIA_war</output-path>
+    <root id="archive" name="TIW_project_RIA_war.war">
+      <element id="artifact" artifact-name="TIW_project_RIA:war exploded" />
+    </root>
+  </artifact>
+</component>

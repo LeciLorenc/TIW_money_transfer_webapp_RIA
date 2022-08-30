@@ -50,7 +50,6 @@ public class HttpServletDBConnected extends HttpServlet {
         }
     }
 
-
     @Override
     public void destroy() {
         try {
@@ -60,35 +59,17 @@ public class HttpServletDBConnected extends HttpServlet {
         } catch (SQLException ignored) {}
     }
 
-    void forwardToErrorPage(HttpServletRequest request, HttpServletResponse response, String error) throws ServletException, IOException{
+    void forwardToErrorPage(HttpServletRequest request, HttpServletResponse response, String error) throws IOException{
 
         request.setAttribute("error", error);
         forward(request, response, Const.pathToErrorPage);
-        return;
     }
 
-    void forward(HttpServletRequest request, HttpServletResponse response, String path) throws ServletException, IOException, IOException {
+    void forward(HttpServletRequest request, HttpServletResponse response, String path) throws IOException {
 
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
         thymeleaf.process(path, ctx, response.getWriter());
 
     }
-
-//    public static ResourceBundle findLanguage(HttpServletRequest req) {
-//        ResourceBundle lang;
-//
-//        if (Const.acceptedLangTags.contains(req.getLocale().getLanguage())) {
-//            String language = req.getLocale().getLanguage();
-//            String country = Const.isoTagToCountry.get(language);
-//            lang = ResourceBundle.getBundle(Const.propertiesBaseName,new Locale(language,country));
-//        } else if (Const.acceptedOldIsoLangTags.contains(req.getLocale().getLanguage())) {
-//            String language = Const.oldIsoLangTagsToNew.get(req.getLocale().getLanguage());
-//            String country = Const.isoTagToCountry.get(language);
-//            lang = ResourceBundle.getBundle(Const.propertiesBaseName,new Locale(language,country));
-//        } else {
-//            lang = ResourceBundle.getBundle(Const.propertiesBaseName,new Locale(Const.defaultLanguage,Const.defaultCountry));
-//        }
-//        return lang;
-//    }
 }

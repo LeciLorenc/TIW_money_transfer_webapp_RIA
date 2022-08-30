@@ -49,6 +49,13 @@
             <artifactId>commons-text</artifactId>
             <version>1.9</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.springframework/spring-jdbc -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <version>5.3.21</version>
+        </dependency>
+
     </dependencies>
     <build>
         <plugins>

@@ -12,11 +12,9 @@ import java.sql.SQLException;
 public class UserDAO extends GeneralDAO {
 
 
-
     public UserDAO(Connection connection) {
         super(connection);
     }
-
 
 
     public User findUserByEmail(String email, String password) throws SQLException{

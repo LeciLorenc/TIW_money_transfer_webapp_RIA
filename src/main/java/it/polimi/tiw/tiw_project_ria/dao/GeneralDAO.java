@@ -12,16 +12,13 @@ this class is used to generalize the DAO connection
  */
 public class GeneralDAO {
     protected Connection conn;
-    protected ResourceBundle selectedLanguage;
 
     public GeneralDAO(Connection conn) {
         this.conn = conn;
-        //selectedLanguage = ResourceBundle.getBundle(Const.propertiesBaseName, new Locale(Const.defaultLanguage, Const.defaultCountry));
     }
 
     public GeneralDAO(Connection conn, String language, String country) {
         this.conn = conn;
-       // selectedLanguage = ResourceBundle.getBundle(Const.propertiesBaseName, new Locale(language, country));
     }
 
     public static Connection applyConnection(ServletContext context) throws ClassNotFoundException, SQLException, SQLException {

@@ -8,7 +8,7 @@ import java.util.Set;
 public class AddressBook {
 
 	private int owner_id;
-	private Map<Integer, Set<Integer>> contacts = new HashMap<>();
+	private final Map<Integer, Set<Integer>> contacts = new HashMap<>();
 
 	public int getOwner_id() {
 		return owner_id;

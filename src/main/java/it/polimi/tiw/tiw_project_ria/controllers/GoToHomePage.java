@@ -43,7 +43,6 @@ public class GoToHomePage extends HttpServletDBConnected {
             session.removeAttribute("createAccountExists");
             req.setAttribute("warning", "Chosen bank account name already exists!");
         }
-       // req.setAttribute("accounts", clientBankAccounts);
 
         String json = new Gson().toJson(clientBankAccounts);
 
@@ -51,13 +50,6 @@ public class GoToHomePage extends HttpServletDBConnected {
         resp.setCharacterEncoding("UTF-8");
         resp.getWriter().println(json);
 
-//        webContext.setVariable("currentUser",currentUser);
-//        webContext.setVariable("listClientsAccount",clientBankAccounts);
-
-       // thymeleaf.process(homePage,webContext,resp.getWriter());
-
-
     }
-
 
 }

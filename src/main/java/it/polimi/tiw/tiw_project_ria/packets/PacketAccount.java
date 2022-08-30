@@ -1,6 +1,5 @@
 package it.polimi.tiw.tiw_project_ria.packets;
 
-
 import it.polimi.tiw.tiw_project_ria.beans.BankAccount;
 import it.polimi.tiw.tiw_project_ria.beans.Transfer;
 

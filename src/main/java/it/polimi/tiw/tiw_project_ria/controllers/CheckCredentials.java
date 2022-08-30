@@ -5,9 +5,7 @@ import it.polimi.tiw.tiw_project_ria.beans.User;
 import it.polimi.tiw.tiw_project_ria.dao.UserDAO;
 import it.polimi.tiw.tiw_project_ria.packets.PacketUser;
 import org.apache.commons.text.StringEscapeUtils;
-import org.thymeleaf.context.WebContext;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -18,15 +16,14 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 @MultipartConfig
+/*
 
+ */
 @WebServlet("/checkLogin")
 public class CheckCredentials extends HttpServletOnlyDBConnection {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        ResourceBundle lang = findLanguage(req);
-//        ServletContext context = getServletContext();
-//        WebContext webContext = new WebContext(req,resp,context);
         HttpSession session;
 
         String loginPage = "loginPage";
@@ -76,7 +73,7 @@ public class CheckCredentials extends HttpServletOnlyDBConnection {
 
 
 
-            //if errors accured , user is sent back to its inital page
+            //if errors occurred , user is sent back to its initial page
             if(loginError || passwordError || dataError) {
                 try {
                   //  webContext.setVariable("lang",lang);
@@ -93,51 +90,10 @@ public class CheckCredentials extends HttpServletOnlyDBConnection {
                 resp.setContentType("application/json");
                 resp.setCharacterEncoding("UTF-8");
                 resp.getWriter().write(packetUser);
-
-               // resp.sendRedirect("GetAccounts");
             }
         }else { //bad request
             resp.sendRedirect(indexPage);
         }
-//
-//                ResourceBundle lang = findLanguage(req);
-//        ServletContext context = getServletContext();
-//        WebContext webContext = new WebContext(req, resp, context);
-//        HttpSession session;
-//        User user;
-//        UserDAO userDAO = new UserDAO(conn);
-//        String path = getServletContext().getContextPath() + "/GoToHome";
-//        String email = req.getParameter("email");
-//        String password = req.getParameter("password");
-//
-//
-//        // the request is processed only if the parameters sent are correct
-//        if (email == null || email.isEmpty() || password == null || password.isEmpty()) {
-//            //resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "dbAccountInvalidCredentials");
-//            resp.sendRedirect("/error?code=500");
-//            //throw new UnavailableException("problema leggendo input");
-//            return;
-//        }
-//
-//        try {
-//            user = userDAO.findUser(email, password);
-//
-//            if (user != null) {
-//                session = req.getSession(true);
-//                session.setAttribute("user", user);
-//
-//            } else {
-//                resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "user not found");
-//                return;
-//            }
-//        } catch (SQLException sqlException) {
-//            sqlException.printStackTrace();
-//            return;
-//        }
-//
-//
-//        resp.sendRedirect(path);
-
     }
 
     @Override

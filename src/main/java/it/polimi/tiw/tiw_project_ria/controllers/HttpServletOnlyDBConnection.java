@@ -2,9 +2,6 @@ package it.polimi.tiw.tiw_project_ria.controllers;
 
 import it.polimi.tiw.tiw_project_ria.filters.HttpServletFilter;
 import it.polimi.tiw.tiw_project_ria.utils.Const;
-import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.templatemode.TemplateMode;
-import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -15,7 +12,6 @@ import java.sql.SQLException;
 
 public class HttpServletOnlyDBConnection extends HttpServlet {
     protected Connection conn;
-    protected TemplateEngine thymeleaf;
 
     @Override
     public void init() throws ServletException {

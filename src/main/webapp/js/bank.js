@@ -3,9 +3,9 @@
  */
 (function(){
     //Vars
-    var transferResult, userInfo, accountList, addressBook, transferList;
+    let transferResult, userInfo, accountList, addressBook, transferList;
 
-    var pageOrchestrator = new PageOrchestrator();
+    const pageOrchestrator = new PageOrchestrator();
 
     window.addEventListener("load", () => {
         pageOrchestrator.start(); // initialize the components
@@ -102,9 +102,7 @@
         this.code = _usercode;
         this.logout_button = _logout_button;
 
-        // this.logout_button.addEventListener("click", e => {
-        //     sessionStorage.clear();
-        // });
+
 
         this.show = function(){
             nameElements.forEach(element => {
@@ -146,10 +144,10 @@
         this.last_used_open_button = null;
         this.account_names = [];
 
-        var self = this; //Necessary only for in-function helpers (makeCall)
+        const self = this; //Necessary only for in-function helpers (makeCall)
         //Link to buttons
         this.create_account_button.addEventListener('click', (e) =>{
-            var button_label = e.target.textContent;
+            const button_label = e.target.textContent;
             if(button_label === 'Create account'){
                 e.target.textContent = 'Hide form';
                 self.create_account_warning.style.display = 'none';
@@ -164,10 +162,10 @@
 
             self.create_account_warning.style.display = 'none';
 
-            var create_account_form = e.target.closest("form");
+            const create_account_form = e.target.closest("form");
             if(create_account_form.checkValidity()){
 
-                var input_name = create_account_form.querySelector("input[name='accountName']");
+                const input_name = create_account_form.querySelector("input[name='accountName']");
                 if(self.account_names.includes(input_name.value)){
                     create_account_form.reset();
                     self.create_account_warning.textContent = "Chosen account name already exists";
@@ -178,7 +176,7 @@
                 myMakeCall("POST", 'CreateAccount', create_account_form, (req) =>{
                     switch(req.status){
                         case 200: //ok
-                            var click = new Event("click");
+                            const click = new Event("click");
                             click.preventDefault();
                             self.create_account_button.dispatchEvent(click);
                             self.show();
@@ -204,11 +202,11 @@
             myMakeCall("GET", 'GetAccounts', null, (req) =>{
                 switch(req.status){
                     case 200: //ok
-                        var accounts = JSON.parse(req.responseText);
+                        const accounts = JSON.parse(req.responseText);
                         self.update(accounts);
                         if(!isNaN(self.currentSelectedId)){
-                            var open_account_button = document.querySelector("a[data_accountid='" + self.currentSelectedId + "']");
-                            var click = new Event("click");
+                            const open_account_button = document.querySelector("a[data_accountid='" + self.currentSelectedId + "']");
+                            const click = new Event("click");
                             if(open_account_button)
                                 open_account_button.dispatchEvent(click);
                         }

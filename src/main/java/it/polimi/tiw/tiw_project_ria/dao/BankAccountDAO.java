@@ -1,6 +1,5 @@
 package it.polimi.tiw.tiw_project_ria.dao;
 
-
 import it.polimi.tiw.tiw_project_ria.beans.BankAccount;
 
 import java.sql.Connection;
