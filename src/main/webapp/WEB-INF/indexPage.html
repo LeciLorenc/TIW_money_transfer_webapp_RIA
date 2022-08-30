@@ -5,8 +5,36 @@
     <title>Login page THY</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
     <link rel="stylesheet" type="text/css" media="all" href="/CSS/mystyle.css" th:href="@{/CSS/mystyle.css}"/>
     <script src="script/error.js" charset="UTF-8" defer></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
+
+<!--    <script type="text/javascript" src="../js/utils.js" charset="utf-8" defer></script>-->
+<!--    <script type="text/javascript" src="../js/bank.js" charset="utf-8" defer></script>-->
+<!--    <script type="text/javascript"  src="js/loginManagement.js" charset="utf-8" defer></script>-->
+
+
+<!--    <script type="text/javascript" src="../js/login.js" charset="utf-8" defer></script>-->
+
+<!--    <script type="text/javascript" src="../js/utils.js" th:href="@{/js/login.js}" charset="utf-8" defer></script>-->
+    <script type="text/javascript" src="../js/bank.js" charset="utf-8" defer></script>
+    <!--    <script type="text/javascript"  src="js/loginManagement.js" charset="utf-8" defer></script>-->
+    <script type="text/javascript" src="../js/login.js" charset="utf-8" defer></script>
+
+    	<link rel="stylesheet" type="text/css" href="../css/global.css" th:href="@{/css/global.css}"/>
+    	<link rel="stylesheet" type="text/css" href="../css/home.css" th:href="@{/css/home.css}" />
+    	<link rel="stylesheet" type="text/css" href="../css/loading.css" th:href="@{/css/loading.css}" />
+    	<link rel="stylesheet" type="text/css" href="../css/navbar.css" th:href="@{/css/navbar.css}" />
+    	<link rel="stylesheet" type="text/css" href="../css/global.css" th:href="@{/css/global2.css}"/>
+    	<link rel="stylesheet" type="text/css" href="../css/home.css" th:href="@{/css/home2.css}" />
+    	<link rel="stylesheet" type="text/css" href="../css/loading.css" th:href="@{/css/loading.css}" />
+        <script type="text/javascript" src="utils.js" charset="utf-8" defer></script>
+<!--        <script type="text/javascript" src="bank.js" charset="utf-8" defer></script>-->
+        <script type="text/javascript" src="login.js" charset="utf-8" defer></script>
+<!--        <script src="js/utils.js" th:href="@{/js/utils.js}" charset="utf-8" defer></script>-->
+<!--        <script src="js/bank.js" th:href="@{/js/bank.js}" charset="utf-8" defer></script>-->
+<!--        <script src="js/bank.js" th:href="@{/js/login.js}" charset="utf-8" defer></script>-->
 </head>
 <body>
 
@@ -64,6 +92,7 @@
 
                         <p data-th-if="${loginError}" data-th-utext="${errorText}" class="error">This is an error
                             text</p>
+                        <input type="hidden" name="action" value="bda_alert">
 
 
                         <input type="text"
@@ -74,7 +103,9 @@
                                name="password1" placeholder="repeat password" value="1234" required> <br/>
 
 
-                        <input class="btn btn-lg btn-block btn-info" onclick="this.form.action='checkLogin';"
+<!--                        <input id="login_button" class="btn btn-large btn-purple" type="button" value="login" name="login" />-->
+
+                        <input id="login_button" class="btn btn-lg btn-block btn-info"
                                type="submit" name="Login" value="login">
                     </form>
                 </fieldset>

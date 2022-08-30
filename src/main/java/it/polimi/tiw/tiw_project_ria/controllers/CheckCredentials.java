@@ -1,5 +1,6 @@
 package it.polimi.tiw.tiw_project_ria.controllers;
 
+import com.google.gson.Gson;
 import it.polimi.tiw.tiw_project_ria.beans.User;
 import it.polimi.tiw.tiw_project_ria.dao.UserDAO;
 import it.polimi.tiw.tiw_project_ria.packets.PacketUser;
@@ -8,6 +9,7 @@ import org.thymeleaf.context.WebContext;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,14 +17,16 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 
+@MultipartConfig
+
 @WebServlet("/checkLogin")
-public class CheckCredentials extends HttpServletDBConnected {
+public class CheckCredentials extends HttpServletOnlyDBConnection {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 //        ResourceBundle lang = findLanguage(req);
-        ServletContext context = getServletContext();
-        WebContext webContext = new WebContext(req,resp,context);
+//        ServletContext context = getServletContext();
+//        WebContext webContext = new WebContext(req,resp,context);
         HttpSession session;
 
         String loginPage = "loginPage";
@@ -76,21 +80,21 @@ public class CheckCredentials extends HttpServletDBConnected {
             if(loginError || passwordError || dataError) {
                 try {
                   //  webContext.setVariable("lang",lang);
-                    webContext.setVariable("error",loginError);
-                    thymeleaf.process(loginPage,webContext,resp.getWriter());
+//                    webContext.setVariable("error",loginError);
+//                    thymeleaf.process(loginPage,webContext,resp.getWriter());
                 }catch (Exception e) {
                     e.printStackTrace();
                 }
             } else { //no errors
 
-//                String packetUser = new Gson().toJson(new PacketUser(user.getName(), user.getId()));
-//
-//                resp.setStatus(HttpServletResponse.SC_OK);
-//                resp.setContentType("application/json");
-//                resp.setCharacterEncoding("UTF-8");
-//                resp.getWriter().println(packetUser);
+                String packetUser = new Gson().toJson(new PacketUser(user.getName(), user.getId()));
 
-                resp.sendRedirect(homePage);
+                resp.setStatus(HttpServletResponse.SC_OK);
+                resp.setContentType("application/json");
+                resp.setCharacterEncoding("UTF-8");
+                resp.getWriter().write(packetUser);
+
+               // resp.sendRedirect("GetAccounts");
             }
         }else { //bad request
             resp.sendRedirect(indexPage);

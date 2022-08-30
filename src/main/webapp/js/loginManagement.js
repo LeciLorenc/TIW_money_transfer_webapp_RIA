@@ -17,7 +17,31 @@
         var form = e.target.closest("form"); 
         login_warning_div.style.display = 'none';
         if (form.checkValidity()) { //Do form check
-            sendToServer(form, login_warning_div, 'Login');
+            // sendToServer(form, login_warning_div, 'checkLogin');
+            makeCall("POST", 'checkLogin', form,
+                function(x) {
+                    if (x.readyState === XMLHttpRequest.DONE) {
+                        var message = x.responseText;
+                        switch (x.status) {
+                            case 200: //Okay
+                                var data = JSON.parse(req.responseText);
+                                sessionStorage.setItem('id', data.id);
+                                sessionStorage.setItem('name', data.name);
+                                window.location.href = "home";
+                                break;
+                            case 400: // bad request
+                            case 401: // unauthorized
+                            case 500: // server error
+                                error_div.textContent = req.responseText;
+                                error_div.style.display = 'block';
+                                break;
+                            default: //Error
+                                error_div.textContent = "Request reported status " + req.status;
+                                error_div.style.display = 'block';
+                        }
+                    }
+                }
+            );
         }else 
             form.reportValidity(); //If not valid, notify
     });
@@ -50,7 +74,7 @@
     });
 
     function sendToServer(form, error_div, request_url){
-        makeCall("POST", request_url, form, function(req){
+        myMakeCall("POST", request_url, form, function(req){
             switch(req.status){ //Get status code
                 case 200: //Okay
                     var data = JSON.parse(req.responseText);

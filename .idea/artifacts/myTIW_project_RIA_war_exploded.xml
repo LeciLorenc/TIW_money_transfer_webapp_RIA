@@ -20,6 +20,7 @@
       </element>
       <element id="javaee-facet-resources" facet="TIW_project_RIA/web/Web" />
       <element id="module-source" name="TIW_project_RIA" />
+      <element id="dir-copy" path="$PROJECT_DIR$/src/main/webapp/js" />
     </root>
   </artifact>
 </component>

@@ -4,7 +4,7 @@
 (function(){
     //Vars
     var transferResult, userInfo, accountList, addressBook, transferList;
-    
+
     var pageOrchestrator = new PageOrchestrator();
 
     window.addEventListener("load", () => {
@@ -22,22 +22,22 @@
         this.start = function(){
             //Init components
             userInfo = new UserInfo(
-                sessionStorage.getItem('name'), 
-                sessionStorage.getItem('id'), 
-                [document.getElementById("userName"), document.getElementById("headerUserName")], 
-                [document.getElementById("headerUserCode")], 
+                sessionStorage.getItem('name'),
+                sessionStorage.getItem('id'),
+                [document.getElementById("userName"), document.getElementById("headerUserName")],
+                [document.getElementById("headerUserCode")],
                 document.getElementById("logout-button")
             );
 
             accountList = new AccountList(
-                document.getElementById("create-account-form"), 
-                document.getElementById("account-form-button"), 
-                document.getElementById("create-account-warning"), 
-                document.getElementById("create-account-button"), 
-                document.getElementById("accounts"), 
+                document.getElementById("create-account-form"),
+                document.getElementById("account-form-button"),
+                document.getElementById("create-account-warning"),
+                document.getElementById("create-account-button"),
+                document.getElementById("accounts"),
                 document.getElementById("accounts-message")
             );
-            
+
             transferResult = new TransferResult({
                 "result_div" : document.getElementById("result-div"),
                 "confirmed_div" : document.getElementById("confirmed-div"),
@@ -70,11 +70,11 @@
             );
 
             addressBook = new AddressBook(
-                document.getElementById("add-contact"), 
-                document.getElementById("dest-owner-code"), 
-                document.getElementById("dest-account-code"), 
-                document.getElementById("add-contact-warning"), 
-                document.getElementById("add-contact-status-loading"), 
+                document.getElementById("add-contact"),
+                document.getElementById("dest-owner-code"),
+                document.getElementById("dest-account-code"),
+                document.getElementById("add-contact-warning"),
+                document.getElementById("add-contact-status-loading"),
                 document.getElementById("add-contact-status-ok"),
                 document.getElementById("add-contact-status-ko"),
                 document.getElementById("create-transfer-warning"),
@@ -92,19 +92,19 @@
     }
 
     function UserInfo(
-        _name, 
-        _usercode, 
-        nameElements, 
-        codeElements, 
-        _logout_button){ 
+        _name,
+        _usercode,
+        nameElements,
+        codeElements,
+        _logout_button){
 
         this.name = _name;
         this.code = _usercode;
         this.logout_button = _logout_button;
 
-        this.logout_button.addEventListener("click", e => {
-            sessionStorage.clear();
-        });
+        // this.logout_button.addEventListener("click", e => {
+        //     sessionStorage.clear();
+        // });
 
         this.show = function(){
             nameElements.forEach(element => {
@@ -120,19 +120,19 @@
      * Notes:
      * - isNaN is used in combo with NaN, because of autoconversion of input parameter.
      *   (see https://developer.mozilla.org/it/docs/Web/JavaScript/Reference/Global_Objects/isNaN)
-     * 
+     *
      * - List account_names could be retrived from document using attribute data_accountid,
      *   but we aimed at optimizing check rapidity
-     * 
+     *
      * - When creating account, only the account list refreshes (and eventually autoclicks the account the user
      *  had already open, to keep its details open)
      */
     function AccountList(
-        _create_account_form, 
+        _create_account_form,
         _account_form_button,
         _create_account_warning,
         _create_account_button,
-        _accounts, 
+        _accounts,
         _accounts_message){
 
         this.create_account_form_div = _create_account_form;
@@ -166,7 +166,7 @@
 
             var create_account_form = e.target.closest("form");
             if(create_account_form.checkValidity()){
-                
+
                 var input_name = create_account_form.querySelector("input[name='accountName']");
                 if(self.account_names.includes(input_name.value)){
                     create_account_form.reset();
@@ -175,10 +175,11 @@
                     return;
                 }
 
-                makeCall("POST", 'CreateAccount', create_account_form, (req) =>{
+                myMakeCall("POST", 'CreateAccount', create_account_form, (req) =>{
                     switch(req.status){
                         case 200: //ok
                             var click = new Event("click");
+                            click.preventDefault();
                             self.create_account_button.dispatchEvent(click);
                             self.show();
                             break;
@@ -200,7 +201,7 @@
 
         this.show = function(){
             //Request and update with the results
-            makeCall("GET", 'GetAccounts', null, (req) =>{
+            myMakeCall("GET", 'GetAccounts', null, (req) =>{
                 switch(req.status){
                     case 200: //ok
                         var accounts = JSON.parse(req.responseText);
@@ -210,7 +211,7 @@
                             var click = new Event("click");
                             if(open_account_button)
                                 open_account_button.dispatchEvent(click);
-                        } 
+                        }
                         break;
                     case 400: // bad request
                     case 401: // unauthorized
@@ -224,7 +225,7 @@
             });
         };
         this.update = function(_accounts, _error) {
-            
+
             self.accounts.style.display = "none";
             self.accounts.innerHTML = "";
             self.account_names.splice(0,self.account_names.length); //Clear array
@@ -235,7 +236,7 @@
                 if(!self.accounts_message.className.includes("warning-message"))
                     self.accounts_message.className += " warning-message";
                 self.accounts_message.style.display = "block";
-                
+
             }else{
 
                 if(_accounts.length === 0){
@@ -263,7 +264,7 @@
                         b1.textContent = "Code: ";
                         card_data.appendChild(b1);
                         card_data.appendChild(document.createTextNode(acc.id));
-                    
+
                         br = document.createElement("br");
                         card_data.appendChild(br);
 
@@ -271,7 +272,7 @@
                         b2.textContent = "Balance: ";
                         card_data.appendChild(b2);
                         card_data.appendChild(document.createTextNode(acc.balance + "\u20AC"));
-                
+
 
                         card.appendChild(card_data);
                         open_button = document.createElement("a");
@@ -314,13 +315,13 @@
      */
     function TransferList(
                         _account_details,
-                        _account_name, 
+                        _account_name,
                         _account_code,
-                        _account_balance, 
-                        _create_transfer_form_div, 
+                        _account_balance,
+                        _create_transfer_form_div,
                         _transfer_form_button,
                         _create_transfer_button,
-                        _transfers, 
+                        _transfers,
                         _transfers_message){
         //Saving vars
         this.account_details = _account_details;
@@ -332,13 +333,13 @@
         this.create_transfer_button = _create_transfer_button;
         this.transfers = _transfers;
         this.transfers_message = _transfers_message;
-        
+
         this.create_transfer_form = this.create_transfer_form_div.querySelector("form");
         this.dest_input = this.create_transfer_form.querySelector("input[name='destUserId']");
         this.account_input = this.create_transfer_form.querySelector("input[name='destAccountId']");
         this.amount_input = this.create_transfer_form.querySelector("input[name='amount']");
         this.source_id = this.create_transfer_form.querySelector("input[name='sourceAccountId']");
-        
+
         //Attach listeners
         this.create_transfer_button.addEventListener("click", (e) => {
             if(this.create_transfer_button.textContent === 'Create transfer'){
@@ -349,9 +350,11 @@
         });
         this.transfer_form_button.addEventListener("click", (e) =>{
             //Get form
+            e.preventDefault();
+
             if(this.create_transfer_form.checkValidity()){
                 //Check account loop
-                if (this.account_input.value == this.source_id.value){
+                if (this.account_input.value === this.source_id.value){
                     this.create_transfer_form.reset();
                     transferResult.showFailure("Cannot make transfers on the same account");
                     return;
@@ -362,7 +365,7 @@
                 }
                 //Make request
                 var self = this;
-                makeCall("POST", 'MakeTransfer', this.create_transfer_form, (req) =>{
+                myMakeCall("POST", 'MakeTransfer', this.create_transfer_form, (req) =>{
                     switch(req.status){
                         case 200: //ok
                             var data = JSON.parse(req.responseText);
@@ -390,7 +393,7 @@
             addressBook.autocompleteDest(e.target.value);
         });
         this.dest_input.addEventListener("keyup", e => {
-            addressBook.autocompleteDest(e.target.value);  
+            addressBook.autocompleteDest(e.target.value);
         });
         this.account_input.addEventListener("focus", e => {
             addressBook.autocompleteAccount(this.dest_input.value, e.target.value, this.source_id.value);
@@ -404,14 +407,14 @@
         };
         this.hideCreate = function(reset){
             this.create_transfer_button.textContent = 'Create transfer';
-            this.create_transfer_form_div.style.display = 'none'; 
+            this.create_transfer_form_div.style.display = 'none';
             if (reset)
                 this.create_transfer_form.reset();
         };
         this.show = function(accountID){
             //Request and update with the results
             var self = this;
-            makeCall("GET", 'GetAccountDetails?accountId=' + accountID, null, (req) =>{
+            myMakeCall("GET", 'GetAccountDetails?accountId=' + accountID, null, (req) =>{
                 switch(req.status){
                     case 200: //ok
                         var data = JSON.parse(req.responseText);
@@ -456,7 +459,7 @@
                 this.account_details.style.display = "block";
                 return;
             }
-            
+
             //Init list   
             transfers.forEach((transfer) => {
 
@@ -469,7 +472,7 @@
                 card_title.className = "linked-card-title";
                 card_title.textContent = (transfer.sourceAccountID === account.id ? "Destination Account: " + transfer.destinationAccountID : "Source Account: " + transfer.sourceAccountID);
                 card.appendChild(card_title);
-                
+
                 card_data = document.createElement("div");
                 card_data.className = "linked-card-data";
 
@@ -477,7 +480,7 @@
                 b1.textContent = "Timestamp: ";
                 card_data.appendChild(b1);
                 card_data.appendChild(document.createTextNode(transfer.timestamp));
-                    
+
                 br = document.createElement("br");
                 card_data.appendChild(br);
 
@@ -490,7 +493,7 @@
                 amount_div.className = "transfers-amount " + (transfer.sourceAccountID === account.id ? "negative" : "positive");
                 amount_div.appendChild(document.createTextNode((transfer.sourceAccountID === account.id ? "-" : "+" ) + transfer.amount + "\u20AC"));
                 card_data.appendChild(amount_div);
-                
+
                 card.appendChild(card_data);
 
                 this.transfers.appendChild(card);
@@ -560,23 +563,23 @@
      * - Multiple images for displaying contact adding outcome are used for
      *   optimizing first loading. Setting them only in css, would have caused a late
      *   loading when not already in cache.
-     * 
+     *
      * - the address book is stored as a "map" inside contacts variable. Actually, is parsed
      *   from json as an Object, with properties destIDs, each with an associated List of destAccounts.
-     * 
+     *
      * - destIDs are converted into a List with Object.keys(), as we needed to do also partial matching.
-     *   Because destIDs is a List of String (property names), when actually elements are numbers, 
-     *   and the inputDestID.value is a number, we needed an Array function which would compare elements 
+     *   Because destIDs is a List of String (property names), when actually elements are numbers,
+     *   and the inputDestID.value is a number, we needed an Array function which would compare elements
      *   with autocasting.
      *   This is why we introduced method Array.contains(el):boolean (utils.js)
      */
     function AddressBook(
-        _add_contact, 
+        _add_contact,
         _destination_user_span,
-        _destination_account_span, 
-        _add_contact_warning_div, 
-        _add_contact_status_loading,  
-        _add_contact_status_ok,  
+        _destination_account_span,
+        _add_contact_warning_div,
+        _add_contact_status_loading,
+        _add_contact_status_ok,
         _add_contact_status_ko,
         _create_transfer_warning,
         _dest_ids_datalist,
@@ -593,7 +596,7 @@
         this.dest_ids_datalist = _dest_ids_datalist;
         this.dest_accounts_datalist = _dest_accounts_datalist;
         this.contacts = [];
-        
+
         var self = this;
 
         this.add_contact.addEventListener("click", (e) => {
@@ -606,7 +609,7 @@
         });
 
         this.load = function(){
-            makeCall("GET", "GetContacts", null, (req) => {
+            myMakeCall("GET", "GetContacts", null, (req) => {
                 switch(req.status){
                     case 200: //ok
                         self.create_transfer_warning.style.display = "none";
@@ -623,7 +626,7 @@
             });
         };
         this.showButton = function(destUserCode, destAccountCode){
-            
+
             self.add_contact_warning_div.style.display = "none";
             self.add_contact_status_loading.style.display = "none";
             self.add_contact_status_ok.style.display = "none";
@@ -636,7 +639,7 @@
                     return;
                 }
             }
-            
+
             self.add_contact.style.display = "block";
         };
 
@@ -646,7 +649,7 @@
             data.append("contactId", destUserCode);
             data.append("contactAccountId", destAccountCode);
             //Send data
-            makeCall("POST", "AddContact", data, (req) => {
+            myMakeCall("POST", "AddContact", data, (req) => {
                 switch(req.status){
                     case 200: //ok
                         self.load();
