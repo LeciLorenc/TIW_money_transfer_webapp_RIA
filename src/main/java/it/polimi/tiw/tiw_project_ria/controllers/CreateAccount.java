@@ -17,7 +17,7 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet("/CreateAccount")
 @MultipartConfig
-public class CreateAccount extends HttpServletOnlyDBConnection {
+public class CreateAccount extends HttpServletDBConnected {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		

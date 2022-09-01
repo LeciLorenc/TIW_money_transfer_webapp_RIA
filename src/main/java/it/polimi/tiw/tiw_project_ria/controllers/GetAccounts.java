@@ -20,7 +20,7 @@ import it.polimi.tiw.tiw_project_ria.dao.BankAccountDAO;
  */
 @WebServlet("/GetAccounts")
 @MultipartConfig
-public class GetAccounts extends HttpServletOnlyDBConnection {
+public class GetAccounts extends HttpServletDBConnected {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		

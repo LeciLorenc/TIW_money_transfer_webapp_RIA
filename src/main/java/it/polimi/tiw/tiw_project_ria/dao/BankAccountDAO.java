@@ -162,7 +162,7 @@ public class BankAccountDAO extends GeneralDAO{
 
         BankAccount account = null;
         String performedAction = " finding an account by id";
-        String query = "SELECT * FROM bank.bank_account WHERE id = ?";
+        String query = "SELECT * FROM bank_account WHERE id = ?";
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
 

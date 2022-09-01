@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -25,13 +26,11 @@ import it.polimi.tiw.tiw_project_ria.packets.PacketAccount;
  */
 @WebServlet("/GetAccountDetails")
 @MultipartConfig
-public class GetAccountDetails extends HttpServletOnlyDBConnection {
+public class GetAccountDetails extends HttpServletDBConnected {
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-		System.out.println("dento a GETAccountDetails");
-		
 		String accountIdString = request.getParameter("accountId");
 		
 		if(accountIdString == null) {
@@ -84,5 +83,10 @@ public class GetAccountDetails extends HttpServletOnlyDBConnection {
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write(json);
+	}
+
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		doGet(req, resp);
 	}
 }

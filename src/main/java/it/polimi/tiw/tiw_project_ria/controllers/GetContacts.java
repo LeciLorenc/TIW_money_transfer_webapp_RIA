@@ -20,7 +20,7 @@ import it.polimi.tiw.tiw_project_ria.dao.AddressBookDAO;
  */
 @WebServlet("/GetContacts")
 @MultipartConfig
-public class GetContacts extends HttpServletOnlyDBConnection {
+public class GetContacts extends HttpServletDBConnected {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		

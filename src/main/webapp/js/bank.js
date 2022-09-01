@@ -106,7 +106,7 @@
 
         this.show = function(){
             nameElements.forEach(element => {
-                element.textContent = this.name;
+                // element.textContent = this.name;
             });
             codeElements.forEach(element => {
                 element.textContent = this.code;
@@ -160,6 +160,7 @@
 
         this.account_form_button.addEventListener("click", (e) =>{
 
+            e.preventDefault();
             self.create_account_warning.style.display = 'none';
 
             const create_account_form = e.target.closest("form");
@@ -600,6 +601,7 @@
         this.add_contact.addEventListener("click", (e) => {
             e.target.style.display = "none";
             self.add_contact_status_loading.style.display = "block";
+            e.preventDefault();
 
             var destUsrId = self.destination_user_span.textContent;
             var destAccId = self.destination_account_span.textContent;
@@ -643,33 +645,52 @@
 
         this.addContact = function(destUserCode, destAccountCode){
             //Create form data
-            var data = new FormData();
+            let data = new FormData();
             data.append("contactId", destUserCode);
             data.append("contactAccountId", destAccountCode);
             //Send data
-            myMakeCall("POST", "AddContact", data, (req) => {
-                switch(req.status){
-                    case 200: //ok
-                        self.load();
-                        self.add_contact_status_loading.style.display = "none";
-                        self.add_contact_status_ok.style.display = "block";
-                        break;
-                    case 400: // bad request
-                    case 401: // unauthorized
-                    case 500: // server error
-                        self.add_contact_status_loading.style.display = "none"
-                        self.add_contact_warning_div.textContent = req.responseText;
-                        self.add_contact_status_ko.style.display = "block";
-                        self.add_contact_warning_div.style.display = "block";
-                        break;
-                    default: //Error
-                        self.add_contact_status_loading.style.display = "none";
-                        self.add_contact_warning_div.textContent = "Request reported status " + req.status;
-                        self.add_contact_status_ko.style.display = "block";
-                        self.add_contact_warning_div.style.display = 'block';
-                        break;
-                }
+
+            let postRequest = $.post("AddContact", {contactId: destUserCode, contactAccountId: destAccountCode});
+
+            postRequest.done(function (data, textStatus, jqXHR) {
+                sessionStorage.setItem('isLoggedIn', 'true');
+
+                self.load();
+                self.add_contact_status_loading.style.display = "none";
+                self.add_contact_status_ok.style.display = "block";
+                // sessionStorage.setItem('username', user_data.username);
+
+                //Redirect to the homepage (if user) or to employee page
+
             });
+            postRequest.fail(function (jqXHR, textStatus, errorThrown) {
+                console.log("failed")
+
+            });
+
+            // myMakeCall("POST", "AddContact", data, (req) => {
+            //     switch(req.status){
+            //         case 200: //ok
+            //             self.load();
+            //             self.add_contact_status_loading.style.display = "none";
+            //             self.add_contact_status_ok.style.display = "block";
+            //             break;
+            //         case 400: // bad request
+            //         case 401: // unauthorized
+            //         case 500: // server error
+            //             self.add_contact_status_loading.style.display = "none"
+            //             self.add_contact_warning_div.textContent = req.responseText;
+            //             self.add_contact_status_ko.style.display = "block";
+            //             self.add_contact_warning_div.style.display = "block";
+            //             break;
+            //         default: //Error
+            //             self.add_contact_status_loading.style.display = "none";
+            //             self.add_contact_warning_div.textContent = "Request reported status " + req.status;
+            //             self.add_contact_status_ko.style.display = "block";
+            //             self.add_contact_warning_div.style.display = 'block';
+            //             break;
+            //     }
+            // });
         };
 
         this.autocompleteDest = function(dest_id){
@@ -718,5 +739,13 @@
             }
         }
     }
+
+    document.getElementById("id-homePage").addEventListener("click", ev =>
+    {
+        ev.preventDefault();
+        pageOrchestrator.start();
+        pageOrchestrator.refresh();
+    });
+
 
 })();

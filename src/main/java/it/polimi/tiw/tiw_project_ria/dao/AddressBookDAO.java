@@ -9,7 +9,6 @@ import java.sql.SQLException;
 
 public class AddressBookDAO extends GeneralDAO {
 
-	private Connection connection;
 
 	public AddressBookDAO(Connection conn) {
 		super(conn);
@@ -31,7 +30,7 @@ public class AddressBookDAO extends GeneralDAO {
 		ResultSet resultSet = null;
 		
 		try {
-			preparedStatement = connection.prepareStatement(query);
+			preparedStatement = conn.prepareStatement(query);
 			preparedStatement.setInt(1, ownerId);
 			resultSet = preparedStatement.executeQuery();
 			
@@ -66,12 +65,12 @@ public class AddressBookDAO extends GeneralDAO {
 		ResultSet resultSet = null;
 		
 		try {
-			preparedStatement = connection.prepareStatement(query);
+			preparedStatement = conn.prepareStatement(query);
 			preparedStatement.setInt(1, ownerId);
 			preparedStatement.setInt(2, contact_account);
 			resultSet = preparedStatement.executeQuery();
 			
-			if(resultSet.next()) 
+			if(resultSet== null || resultSet.next())
 				result = true;
 			
 			
@@ -100,7 +99,7 @@ public class AddressBookDAO extends GeneralDAO {
 		
 		try {
 			
-			preparedStatementAddUser = connection.prepareStatement(queryAddUser);
+			preparedStatementAddUser = conn.prepareStatement(queryAddUser);
 			preparedStatementAddUser.setInt(1, userid);
 			preparedStatementAddUser.setInt(2, destAccountId);
 			preparedStatementAddUser.executeUpdate();

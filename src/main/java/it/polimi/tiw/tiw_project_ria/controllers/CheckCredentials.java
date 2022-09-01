@@ -20,7 +20,7 @@ import java.sql.SQLException;
 
  */
 @WebServlet("/checkLogin")
-public class CheckCredentials extends HttpServletOnlyDBConnection {
+public class CheckCredentials extends HttpServletDBConnected {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -69,8 +69,6 @@ public class CheckCredentials extends HttpServletOnlyDBConnection {
                 return;
 
             }
-
-
 
 
             //if errors occurred , user is sent back to its initial page

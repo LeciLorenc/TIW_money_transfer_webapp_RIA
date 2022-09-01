@@ -7,28 +7,48 @@
 	<script type="text/javascript" src="js/utils.js" charset="utf-8" defer></script>
 	<script type="text/javascript" src="./js/bank.js" charset="utf-8" defer></script>
 
+	<script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/global.css"/>
 	<link rel="stylesheet" type="text/css" href="css/home.css"/>
 	<link rel="stylesheet" type="text/css" href="css/loading.css"/>
+	<link rel="stylesheet" type="text/css" href="css/navbar.css"/>
+
 
 	<title>Home</title>
 </head>
 
 <body>
 
-<div class="home-title">Welcome to your home, <b><span id="userName">user</span></b></div>
-<div class="home-subtitle">Nice to see you again!</div>
+<!--<div class="home-title">Welcome to your home, <b><span id="userName">user</span></b></div>-->
+<!--<div class="home-subtitle">Nice to see you again!</div>-->
 
-<div class="header-div">
-	<div class="header-title">You are logged as</div>
-	<div class="header-content">
-		User: <b><span id="headerUserName">Nome utente</span></b><br>
-		Personal code: <b><span id="headerUserCode">0476</span></b>
-		<div class="header-buttons">
-			<a id="logout-button" class="btn btn-medium btn-inverted-purple" href="Logout">Log out</a>
+<!--<div class="header-div">-->
+<!--	<div class="header-title">You are logged as</div>-->
+<!--	<div class="header-content">-->
+<!--		User: <b><span id="headerUserName">Nome utente</span></b><br>-->
+<!--		Personal code: <b><span id="headerUserCode">0476</span></b>-->
+<!--		<div class="header-buttons">-->
+<!--			<a id="logout-button" class="btn btn-medium btn-inverted-purple" href="Logout">Log out</a>-->
+<!--		</div>-->
+<!--	</div>-->
+<!--</div>-->
+
+
+<header id="nav-wrapper">
+	<nav id="nav">
+		<div class="nav left">
+            <span class="gradient skew"><h1 class="logo un-skew">
+                <div class="home-title">Nice to see you , <span id="headerUserName">user</span></div>
+				Personal code: <b><span id="headerUserCode">0476</span></b>
+                </h1></span>
+			<button id="menu" class="btn-nav"><span class="fas fa-bars"></span></button>
 		</div>
-	</div>
-</div>
+		<div class="nav right">
+			<a id="id-homePage" class="nav-link active" href="/goToHomePage"> <span class="nav-link-span"><span class="u-nav">Home</span></span> </a>
+			<a id="logout-button" class="nav-link" href="Logout"> <span class="nav-link-span"><span class="u-nav">Logout</span></span> </a>
+		</div>
+	</nav>
+</header>
 
 <br>
 <br>

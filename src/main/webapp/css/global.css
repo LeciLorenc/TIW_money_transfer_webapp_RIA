@@ -16,15 +16,15 @@ html, body{
     Header
 */
 .header-div{
-	position: absolute; 
+    position: absolute;
     right: 1rem;
     top: 1rem;
-	min-width: 180px;
-    height: 116px; 
-	background-color: #fafafa; 
+    min-width: 200px;
+    height: 150px;
+    background-color: #fafafa;
     border: solid 2px #0099cc;
     border-radius: 20px;
-    text-align: center; 
+    text-align: center;
     padding: 0.5rem;
     z-index: 100;
 }
@@ -33,16 +33,13 @@ html, body{
 }
 .header-buttons{
     display: flex;
-    flex-direction: column; /* place children in columns */
-    margin: 0 auto; /* auto left-right border, others default */
-    margin-top: 0.4rem;
-    max-width: 70%;
+    flex-direction: column;
 }
 .header-buttons span {
     margin-top: 10px;
 }
 .header-title{
-	color : #0099cc;
+    color : #0099cc;
 }
 /*
     Standard elements
@@ -63,7 +60,7 @@ hr{
 */
 .btn{
     text-align: center;
-    vertical-align: middle; /* placed in the middle of the parent element */
+    vertical-align: middle;
     border-radius: 5px;
     border-style: solid;
 }
@@ -94,8 +91,8 @@ hr{
     border-color: #0099cc;
     border-width: 2px;
 }
-.btn-inverted-purple:hover{
-    color:#fff;
+.btn-inverted-purple:hover {
+    color: #fff;
     background-color: #0099cc;
 }
 /*
@@ -134,14 +131,14 @@ hr{
 /*
     Colored divs
 */
-.purple-div{
-    margin: 0 auto; /* center horizontally */
+.blue-div{
+    margin: 0 auto;
     border: 2px solid #0099cc;
     border-radius: 20px;
     box-shadow: 0 1rem 3rem rgba(0,0,0,0.175); /* x-offset y-offset radius color */
     padding: 1rem;
 }
-.purple-div .form-group > input:hover{
+.blue-div .form-group > input:hover{
     border: 1px solid #0099cc;
 }
 
@@ -165,7 +162,7 @@ hr{
     right: 1rem;
 }
 .card-title{
-    font-weight: 500;
+    font-weight: 600;
     font-size: 1.2rem;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
@@ -220,4 +217,10 @@ hr{
 }
 .linked-card-blue:last-child{
     border-bottom: 1px solid #17a2b8;
+}
+/*
+    Warning
+*/
+.warning-message{
+    color: #e74a3b;
 }
